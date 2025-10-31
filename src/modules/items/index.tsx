@@ -1,8 +1,11 @@
 import ItemList from "./components/item-list";
 import { Button } from "@/share-components/atoms/button/default";
 import { PlusIcon } from "lucide-react";
+import CreateItemModal from "./components/create-item-modal";
+import { useState } from "react";
 
 function Items() {
+  const [createItemOpenModal, setCreateItemOpenModal] = useState(false);
   return (
     <div className="space-y-8 h-screen">
       <div className="flex justify-between items-center">
@@ -13,6 +16,8 @@ function Items() {
         </Button>
       </div>
       <ItemList />
+
+      <CreateItemModal open={createItemOpenModal} setOpen={setCreateItemOpenModal} />   
     </div>
   );
 }
