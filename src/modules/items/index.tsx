@@ -10,7 +10,7 @@ function Items() {
     <div className="space-y-8 h-screen">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl">Savvytech Frontend Assignment</h1>
-        <Button>
+        <Button onClick={() => setCreateItemOpenModal(true)}>
           Add New Item
           <PlusIcon className="w-4 h-4 mr-2" />
         </Button>

@@ -2,6 +2,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Label } from "@/share-components/atoms/label/default";
 import { Input } from "@/share-components/atoms/input/default";
 import { Button } from "@/share-components/atoms/button/default";
+import { useState } from "react";
+import { toast } from "sonner";
 
 function CreateItemModal({
   open,
@@ -10,40 +12,59 @@ function CreateItemModal({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const [form, setForm] = useState({
+    title: "",
+    subtitle: "",
+  });
+
+  const handleSubmit = () => {
+
+    if(form.title === "" || form.subtitle === "") {
+      toast.error("Please fill out all fields");
+      return;
+    }
+    toast.success("Item created successfully");
+    setOpen(false);
+    setForm({
+      title: "",
+      subtitle: "",
+    });
+  };
+
   return (
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <form>
+        <div>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
+              <DialogTitle>Create New Item</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you&apos;re
-                done.
+                Create a new item by filling out the form below.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">
               <div className="grid gap-3">
-                <Label htmlFor="name-1">Name</Label>
-                <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+                <Label htmlFor="title">Title</Label>
+                <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} id="title" name="title" />
               </div>
               <div className="grid gap-3">
-                <Label htmlFor="username-1">Username</Label>
+                <Label htmlFor="subtitle">Subtitle</Label>
                 <Input
-                  id="username-1"
-                  name="username"
-                  defaultValue="@peduarte"
+                  value={form.subtitle}
+                  onChange={(e) => setForm({ ...form, subtitle: e.target.value })}
+                  id="subtitle"
+                  name="subtitle"
                 />
               </div>
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
               </DialogClose>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit" onClick={handleSubmit}>Create Item</Button>
             </DialogFooter>
           </DialogContent>
-        </form>
+        </div>
       </Dialog>
     </div>
   );
