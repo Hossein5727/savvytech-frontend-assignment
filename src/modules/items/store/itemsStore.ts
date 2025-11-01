@@ -6,6 +6,7 @@ interface ItemsState {
   items: Item[];
   addItem: (item: Item) => void;
   removeItem: (id: string) => void;
+  updateItem: (item: Item) => void;
 }
 
 export const useItemsStore = create<ItemsState>()(
@@ -29,6 +30,10 @@ export const useItemsStore = create<ItemsState>()(
       removeItem: (id) =>
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
+        })),
+      updateItem: (item) =>
+        set((state) => ({
+          items: state.items.map((i) => (i.id === item.id ? item : i)),
         })),
     }),
     {
